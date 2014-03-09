@@ -1,0 +1,15 @@
+BarrierBar < ProgressBar
+  id: barrierBar
+  size: 100 15
+  phantom: true
+  background-color: #ffff44
+  anchors.top: parent.top
+  anchors.left: shieldBar.right
+  margin: 1
+
+UIWindow
+  id: healthInfoPlayerWindow
+  size: 100 15
+  opacity: 0.8
+
+  BarrierBar

@@ -1,0 +1,9 @@
+Module
+  name: game_healthinfo
+  description: Displays health, mana points, shield, barrier, soul points, and conditions
+  author: edubart, BeniS, Flatlander, Sportacus
+  website: www.otclient.info
+  sandboxed: true
+  scripts: [ healthinfo ]
+  @onLoad: init()
+  @onUnload: terminate()

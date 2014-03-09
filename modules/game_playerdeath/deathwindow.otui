@@ -1,0 +1,29 @@
+DeathWindow < MainWindow
+  id: deathWindow
+  !text: tr('You are dead')
+  size: 350 225
+
+  Label
+    !text: tr('YOU ARE DEAD.')
+    width: 550
+    height: 140
+    anchors.left: parent.left
+    anchors.top: parent.top
+    margin-left: 10
+    margin-top: 2
+
+  Button
+    id: buttonOk
+    !text: tr('Revive')
+    width: 64
+    anchors.left: parent.left
+    anchors.bottom: parent.bottom
+    margin-left: 160
+
+  Button
+    id: buttonCancel
+    !text: tr('Logoff')
+    width: 64
+    anchors.left: prev.right
+    anchors.bottom: parent.bottom
+    margin-left: 5

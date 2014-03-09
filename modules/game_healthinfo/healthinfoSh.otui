@@ -1,0 +1,15 @@
+ShieldBar < ProgressBar
+  id: shieldBar
+  size: 100 15
+  phantom: true
+  background-color: #E6E6E6
+  anchors.top: parent.top
+  anchors.left: manaBar.right
+  margin: 1
+
+UIWindow
+  id: healthInfoPlayerWindow
+  size: 100 15
+  opacity: 0.8
+
+  ShieldBar

@@ -1,0 +1,15 @@
+HealthBar < ProgressBar
+  id: healthBar
+  size: 100 15
+  phantom: true
+  background-color: #ff4444
+  anchors.top: parent.top
+  anchors.left: parent.left
+  margin: 1
+
+UIWindow
+  id: healthInfoPlayerWindow
+  size: 100 15
+  opacity: 0.8
+
+  HealthBar

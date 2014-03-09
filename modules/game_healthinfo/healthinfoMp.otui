@@ -1,0 +1,15 @@
+ManaBar < ProgressBar
+  id: manaBar
+  size: 100 15
+  phantom: true
+  background-color: #4444ff
+  anchors.top: parent.top
+  anchors.left: healthBar.right
+  margin: 1
+
+UIWindow
+  id: healthInfoPlayerWindow
+  size: 100 15
+  opacity: 0.8
+
+  ManaBar
