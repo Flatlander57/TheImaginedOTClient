@@ -359,7 +359,7 @@ void Creature::drawInformation(const Point& point, bool useGray, const Rect& par
     }
     if(m_Pshield != Otc::PshieldNone && m_PshieldTexture && m_showPshieldTexture) {
         g_painter->setColor(Color::white);
-        Rect PshieldRect = Rect(backgroundRect.x() + 20.5 + 16 , backgroundRect.y() + 8, m_PshieldTexture->getSize());
+        Rect PshieldRect = Rect(backgroundRect.x() + 20.5 + 13 , backgroundRect.y() + 8, m_PshieldTexture->getSize());
         g_painter->drawTexturedRect(PshieldRect, m_PshieldTexture);
     }
     if(m_emblem != Otc::EmblemNone && m_emblemTexture) {
