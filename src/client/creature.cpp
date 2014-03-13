@@ -55,6 +55,7 @@ Creature::Creature() : Thing()
     m_skull = Otc::SkullNone;
     m_Pshield = Otc::PshieldNone;
     m_emblem = Otc::EmblemNone;
+	m_icon = Otc::NpcIconNone;
     m_lastStepDirection = Otc::InvalidDirection;
     m_nameCache.setFont(g_fonts.getFont("verdana-11px-rounded"));
     m_nameCache.setAlign(Fw::AlignTopCenter);
@@ -238,11 +239,9 @@ void Creature::drawInformation(const Point& point, bool useGray, const Rect& par
 
     // calculate main rects
     Rect backgroundRect = Rect(point.x-(31), point.y-5, 60, 8);
-    backgroundRect.bind(parentRect);
 
     Size nameSize = m_nameCache.getTextSize();
     Rect textRect = Rect(point.x - nameSize.width() / 2.0, point.y-17, nameSize);
-    textRect.bind(parentRect);
 
     // distance them
     if(textRect.top() == parentRect.top())
@@ -321,7 +320,7 @@ void Creature::drawInformation(const Point& point, bool useGray, const Rect& par
     if(g_game.getFeature(Otc::GameBlueNpcNameColor) && isNpc() && m_healthPercent == 100 && !useGray)
         fillColor = Color(0x66, 0xcc, 0xff);
 
-    if(drawFlags & Otc::DrawBars) {
+    if(drawFlags & Otc::DrawBars && (!isNpc() || !g_game.getFeature(Otc::GameHideNpcNames))) {
 		g_painter->setColor(Color::white);
 		g_painter->drawTexturedRect(backgroundRect, m_backgroundTexture);
 		g_painter->setColor(Color::white);
@@ -366,6 +365,11 @@ void Creature::drawInformation(const Point& point, bool useGray, const Rect& par
         g_painter->setColor(Color::white);
         Rect emblemRect = Rect(backgroundRect.x() + 20.5 + 24, backgroundRect.y() + 16, m_emblemTexture->getSize());
         g_painter->drawTexturedRect(emblemRect, m_emblemTexture);
+    }
+    if(m_icon != Otc::NpcIconNone && m_iconTexture) {
+        g_painter->setColor(Color::white);
+        Rect iconRect = Rect(backgroundRect.x() + 13.5 + 4, backgroundRect.y() + 35, m_iconTexture->getSize());
+        g_painter->drawTexturedRect(iconRect, m_iconTexture);
     }
 }
 
@@ -798,6 +802,12 @@ void Creature::setEmblem(uint8 emblem)
     callLuaField("onEmblemChange", m_emblem);
 }
 
+void Creature::setIcon(uint8 icon)
+{
+    m_icon = icon;
+    callLuaField("onIconChange", m_icon);
+}
+
 void Creature::setSkullTexture(const std::string& filename)
 {
     m_skullTexture = g_textures.getTexture(filename);
@@ -821,6 +831,11 @@ void Creature::setPshieldTexture(const std::string& filename, bool blink)
 void Creature::setEmblemTexture(const std::string& filename)
 {
     m_emblemTexture = g_textures.getTexture(filename);
+}
+
+void Creature::setIconTexture(const std::string& filename)
+{
+    m_iconTexture = g_textures.getTexture(filename);
 }
 
 void Creature::setSpeedFormula(double speedA, double speedB, double speedC)

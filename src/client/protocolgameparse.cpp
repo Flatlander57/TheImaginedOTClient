@@ -339,6 +339,9 @@ void ProtocolGame::parseMessage(const InputMessagePtr& msg)
             case Proto::GameServerCreatureMarks:
                 parseCreaturesMark(msg);
                 break;
+            case Proto::GameServerCreatureType:
+                parseCreatureType(msg);
+                break;
             // otclient ONLY
             case Proto::GameServerExtendedOpcode:
                 parseExtendedOpcode(msg);
@@ -1773,6 +1776,13 @@ void ProtocolGame::parseCreaturesMark(const InputMessagePtr& msg)
     }
 }
 
+
+void ProtocolGame::parseCreatureType(const InputMessagePtr& msg)
+{
+    uint32 id = msg->getU32();
+    uint8 type = msg->getU8();
+}
+
 void ProtocolGame::setMapDescription(const InputMessagePtr& msg, int x, int y, int z, int width, int height)
 {
     int startz, endz, zstep;
@@ -2003,7 +2013,9 @@ CreaturePtr ProtocolGame::getCreature(const InputMessagePtr& msg, int type)
         int speed = msg->getU16();
         int skull = msg->getU8();
         int Pshield = msg->getU8();
+        int icon = msg->getU8();
 
+		
         // emblem is sent only when the creature is not known
         int emblem = -1;
         bool unpass = true;
@@ -2014,6 +2026,9 @@ CreaturePtr ProtocolGame::getCreature(const InputMessagePtr& msg, int type)
 
         if(g_game.getFeature(Otc::GameThingMarks)) {
             msg->getU8(); // creature type for summons
+        }
+
+        if(g_game.getFeature(Otc::GameThingMarks)) {			
             mark = msg->getU8(); // mark
             msg->getU16(); // helpers
 
@@ -2037,10 +2052,12 @@ CreaturePtr ProtocolGame::getCreature(const InputMessagePtr& msg, int type)
             creature->setSpeed(speed);
             creature->setSkull(skull);
             creature->setPshield(Pshield);
+            creature->setIcon(icon);
             creature->setPassable(!unpass);
             creature->setLight(light);
             if(emblem != -1)
                 creature->setEmblem(emblem);
+                
 
             if(creature == m_localPlayer && !m_localPlayer->isKnown())
                 m_localPlayer->setKnown(true);

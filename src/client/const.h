@@ -253,6 +253,14 @@ namespace Otc
         EmblemOther
     };
 
+    enum CreatureIcons {
+        NpcIconNone = 0,
+        NpcIconChat,
+        NpcIconTrade,
+        NpcIconQuest,
+        NpcIconTradeQuest
+    };
+	
     enum PlayerStates {
         IconNone = 0,
         IconPoison = 1,
@@ -383,7 +391,9 @@ namespace Otc
         GameWritableDate = 51,
         GameAdditionalVipInfo = 52,
 		GameBaseSkillU16 = 53,
-
+        GameCreatureIcons = 54,
+        GameHideNpcNames = 55,
+ 
         LastGameFeature = 101
     };
 
