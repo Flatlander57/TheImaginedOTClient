@@ -107,10 +107,10 @@ MiniWindow
       text: HP
       size: 20 20
       color: white
-      anchors.bottom: parent.bottom
-      anchors.left: capLabel.left
-      margin-top: 5
-      margin-left: 67
+      anchors.top: conditionPanel.bottom
+      anchors.left: parent.left
+      margin-top: 2
+      margin-left: 5
       @onClick: showHp()
 
     Button
@@ -118,10 +118,10 @@ MiniWindow
       text: MP
       size: 20 20
       color: white
-      anchors.bottom: parent.bottom
+      anchors.top: conditionPanel.bottom
       anchors.left: Hp.right
-      margin-top: 5
-      margin-right: 3
+      margin-top: 2
+      margin-left: 5
       @onClick: showMp()
 
     Button
@@ -129,10 +129,10 @@ MiniWindow
       text: SH
       size: 20 20
       color: white
-      anchors.bottom: parent.bottom
+      anchors.top: conditionPanel.bottom
       anchors.left: Mp.right
-      margin-top: 5
-      margin-right: 3
+      margin-top: 2
+      margin-left: 5
       @onClick: showSh()
 
     Button
@@ -140,8 +140,8 @@ MiniWindow
       text: BR
       size: 20 20
       color: white
-      anchors.bottom: parent.bottom
+      anchors.top: conditionPanel.bottom
       anchors.left: Sh.right
-      margin-top: 5
-      margin-right: 3
+      margin-top: 2
+      margin-left: 5
       @onClick: showBr()

@@ -327,7 +327,7 @@ if(FRAMEWORK_GRAPHICS)
         endif()
 
         # native dx9 support while its under development
-        option(DIRECTX "Use DX9 support" ON)
+        option(DIRECTX "Use DX9 support" OFF)
         if(DIRECTX)
             find_package(DirectX REQUIRED)
             set(framework_DEFINITIONS ${framework_DEFINITIONS} -DDIRECTX)

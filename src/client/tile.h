@@ -57,7 +57,7 @@ class Tile : public LuaObject
 {
 public:
     enum {
-        MAX_THINGS = 10
+        MAX_THINGS = 25
     };
 
     Tile(const Position& position);
