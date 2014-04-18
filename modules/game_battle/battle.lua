@@ -242,6 +242,9 @@ function doCreatureFitFilters(creature)
   if creature == localPlayer then
     return false
   end
+  if creature:getHealthPercent() < 1 then
+	return false
+  end
 
   local pos = creature:getPosition()
   if not pos then return false end
@@ -274,7 +277,7 @@ function onCreatureHealthPercentChange(creature, health)
   if battleButton then
     battleButton:setLifeBarPercent(creature:getHealthPercent())
 	removeCreature(creature)
-    addCreature(creature)
+	addCreature(creature)
   end
 end
 

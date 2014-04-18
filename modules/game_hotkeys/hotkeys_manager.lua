@@ -1,6 +1,6 @@
 HOTKEY_MANAGER_USE = nil
 HOTKEY_MANAGER_USEONSELF = 1
-HOTKEY_MANAGER_USEONTARGET = 2
+--HOTKEY_MANAGER_USEONTARGET = 2
 HOTKEY_MANAGER_USEWITH = 3
 
 HotkeyColors = {
@@ -8,7 +8,7 @@ HotkeyColors = {
   textAutoSend = '#FFFFFF',
   itemUse = '#8888FF',
   itemUseSelf = '#00FF00',
-  itemUseTarget = '#FF0000',
+--  itemUseTarget = '#FF0000',
   itemUseWith = '#F5B325',
 }
 
@@ -26,7 +26,7 @@ sendAutomatically = nil
 selectObjectButton = nil
 clearObjectButton = nil
 useOnSelf = nil
-useOnTarget = nil
+--useOnTarget = nil
 useWith = nil
 defaultComboKeys = nil
 perServer = true
@@ -54,12 +54,12 @@ function init()
   selectObjectButton = hotkeysWindow:getChildById('selectObjectButton')
   clearObjectButton = hotkeysWindow:getChildById('clearObjectButton')
   useOnSelf = hotkeysWindow:getChildById('useOnSelf')
-  useOnTarget = hotkeysWindow:getChildById('useOnTarget')
+--  useOnTarget = hotkeysWindow:getChildById('useOnTarget')
   useWith = hotkeysWindow:getChildById('useWith')
 
   useRadioGroup = UIRadioGroup.create()
   useRadioGroup:addWidget(useOnSelf)
-  useRadioGroup:addWidget(useOnTarget)
+--  useRadioGroup:addWidget(useOnTarget)
   useRadioGroup:addWidget(useWith)
   useRadioGroup.onSelectionChange = function(self, selected) onChangeUseType(selected) end
 
@@ -399,19 +399,19 @@ function doKeyCombo(keyCombo)
     else
       g_game.useInventoryItemWith(hotKey.itemId, g_game.getLocalPlayer())
     end
-  elseif hotKey.useType == HOTKEY_MANAGER_USEONTARGET then
-    local attackingCreature = g_game.getAttackingCreature()
-    if not attackingCreature then
-      local item = Item.create(hotKey.itemId)
-      if g_game.getProtocolVersion() < 780 or hotKey.subType then
-        local tmpItem = g_game.findPlayerItem(hotKey.itemId, hotKey.subType or -1)
-        if not tmpItem then return end
-        item = tmpItem
-      end
+--  elseif hotKey.useType == HOTKEY_MANAGER_USEONTARGET then
+--    local attackingCreature = g_game.getAttackingCreature()
+ --   if not attackingCreature then
+  --    local item = Item.create(hotKey.itemId)
+  --    if g_game.getProtocolVersion() < 780 or hotKey.subType then
+   --     local tmpItem = g_game.findPlayerItem(hotKey.itemId, hotKey.subType or -1)
+  --      if not tmpItem then return end
+--        item = tmpItem
+--      end
 
-      modules.game_interface.startUseWith(item)
-      return
-    end
+--      modules.game_interface.startUseWith(item)
+ --     return
+--    end
 
     if not attackingCreature:getTile() then return end
     if g_game.getProtocolVersion() < 780 or hotKey.subType then
@@ -438,9 +438,9 @@ function updateHotkeyLabel(hotkeyLabel)
   if hotkeyLabel.useType == HOTKEY_MANAGER_USEONSELF then
     hotkeyLabel:setText(tr('%s: (use object on yourself)', hotkeyLabel.keyCombo))
     hotkeyLabel:setColor(HotkeyColors.itemUseSelf)
-  elseif hotkeyLabel.useType == HOTKEY_MANAGER_USEONTARGET then
-    hotkeyLabel:setText(tr('%s: (use object on target)', hotkeyLabel.keyCombo))
-    hotkeyLabel:setColor(HotkeyColors.itemUseTarget)
+--  elseif hotkeyLabel.useType == HOTKEY_MANAGER_USEONTARGET then
+ --   hotkeyLabel:setText(tr('%s: (use object on target)', hotkeyLabel.keyCombo))
+ --   hotkeyLabel:setColor(HotkeyColors.itemUseTarget)
   elseif hotkeyLabel.useType == HOTKEY_MANAGER_USEWITH then
     hotkeyLabel:setText(tr('%s: (use object with crosshair)', hotkeyLabel.keyCombo))
     hotkeyLabel:setColor(HotkeyColors.itemUseWith)
@@ -478,24 +478,24 @@ function updateHotkeyForm(reset)
       end
       if currentItemPreview:getItem():isMultiUse() then
         useOnSelf:enable()
-        useOnTarget:enable()
+--        useOnTarget:enable()
         useWith:enable()
         if currentHotkeyLabel.useType == HOTKEY_MANAGER_USEONSELF then
           useRadioGroup:selectWidget(useOnSelf)
-        elseif currentHotkeyLabel.useType == HOTKEY_MANAGER_USEONTARGET then
-          useRadioGroup:selectWidget(useOnTarget)
+--        elseif currentHotkeyLabel.useType == HOTKEY_MANAGER_USEONTARGET then
+--          useRadioGroup:selectWidget(useOnTarget)
         elseif currentHotkeyLabel.useType == HOTKEY_MANAGER_USEWITH then
           useRadioGroup:selectWidget(useWith)
         end
       else
         useOnSelf:disable()
-        useOnTarget:disable()
+ --       useOnTarget:disable()
         useWith:disable()
         useRadioGroup:clearSelected()
       end
     else
       useOnSelf:disable()
-      useOnTarget:disable()
+--      useOnTarget:disable()
       useWith:disable()
       useRadioGroup:clearSelected()
       hotkeyText:enable()
@@ -518,7 +518,7 @@ function updateHotkeyForm(reset)
     selectObjectButton:disable()
     clearObjectButton:disable()
     useOnSelf:disable()
-    useOnTarget:disable()
+--    useOnTarget:disable()
     useWith:disable()
     hotkeyText:clearText()
     useRadioGroup:clearSelected()
@@ -560,8 +560,8 @@ function onChangeUseType(useTypeWidget)
   if currentHotkeyLabel == nil then return end
   if useTypeWidget == useOnSelf then
     currentHotkeyLabel.useType = HOTKEY_MANAGER_USEONSELF
-  elseif useTypeWidget == useOnTarget then
-    currentHotkeyLabel.useType = HOTKEY_MANAGER_USEONTARGET
+--  elseif useTypeWidget == useOnTarget then
+--    currentHotkeyLabel.useType = HOTKEY_MANAGER_USEONTARGET
   elseif useTypeWidget == useWith then
     currentHotkeyLabel.useType = HOTKEY_MANAGER_USEWITH
   else
