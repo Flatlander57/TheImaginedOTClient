@@ -168,7 +168,7 @@ protected:
 	TexturePtr m_iconTexture;
     stdext::boolean<true> m_showPshieldTexture;
     stdext::boolean<false> m_PshieldBlink;
-    stdext::boolean<false> m_passable;
+    stdext::boolean<true> m_passable;
     Color m_timedSquareColor;
     Color m_staticSquareColor;
     stdext::boolean<false> m_showTimedSquare;

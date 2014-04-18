@@ -1834,7 +1834,7 @@ int ProtocolGame::setTileDescription(const InputMessagePtr& msg, Position positi
             continue;
         }
 
-        if(stackPos > 10)
+        if(stackPos > 25)
             g_logger.traceError(stdext::format("too many things, pos=%s, stackpos=%d", stdext::to_string(position), stackPos));
 
         ThingPtr thing = getThing(msg);

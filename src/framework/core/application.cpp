@@ -90,6 +90,9 @@ void Application::init(std::vector<std::string>& args)
 
     m_startupOptions = startupOptions;
 
+    // initialize configs
+    g_configs.init();
+
     // initialize resources
     g_resources.init(args[0].c_str());
 
@@ -125,8 +128,8 @@ void Application::terminate()
     Connection::terminate();
 #endif
 
-    // save configurations
-    g_configs.save();
+    // release configs
+    g_configs.terminate();
 
     // release resources
     g_resources.terminate();

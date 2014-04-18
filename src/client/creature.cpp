@@ -237,6 +237,7 @@ void Creature::drawInformation(const Point& point, bool useGray, const Rect& par
     if(!useGray)
         fillColor = m_informationColor;
 
+		
     // calculate main rects
     Rect backgroundRect = Rect(point.x-(31), point.y-5, 60, 8);
 
@@ -319,58 +320,61 @@ void Creature::drawInformation(const Point& point, bool useGray, const Rect& par
     // draw
     if(g_game.getFeature(Otc::GameBlueNpcNameColor) && isNpc() && m_healthPercent == 100 && !useGray)
         fillColor = Color(0x66, 0xcc, 0xff);
-
-    if(drawFlags & Otc::DrawBars && (!isNpc() || !g_game.getFeature(Otc::GameHideNpcNames))) {
-		g_painter->setColor(Color::white);
-		g_painter->drawTexturedRect(backgroundRect, m_backgroundTexture);
-		g_painter->setColor(Color::white);
-		g_painter->drawTexturedRect(healthRect, m_healthTexture);
-		g_painter->setColor(Color::white);
-		g_painter->drawTexturedRect(healthRect2, m_healthHalfTexture);
-		if(m_barrierPercent > 0) {
+		
+	if(m_healthPercent > 0) {
+		if(drawFlags & Otc::DrawBars && (!isNpc() || !g_game.getFeature(Otc::GameHideNpcNames))) {
 			g_painter->setColor(Color::white);
-			g_painter->drawTexturedRect(barrierRect, m_barrierTexture);
+			g_painter->drawTexturedRect(backgroundRect, m_backgroundTexture);
+			g_painter->setColor(Color::white);
+			g_painter->drawTexturedRect(healthRect, m_healthTexture);
+			g_painter->setColor(Color::white);
+			g_painter->drawTexturedRect(healthRect2, m_healthHalfTexture);
+			if(m_barrierPercent > 0) {
+				g_painter->setColor(Color::white);
+				g_painter->drawTexturedRect(barrierRect, m_barrierTexture);
+			}
+			if(m_shieldPercent > 0) {
+				g_painter->setColor(Color::white);
+				g_painter->drawTexturedRect(shieldBackgroundRect, m_shieldBackgroundTexture);
+				g_painter->setColor(Color::white);
+				g_painter->drawTexturedRect(shieldRect, m_shieldTexture);
+			}
+		// old bars
+			//g_painter->setColor(Color::black);
+			//g_painter->drawFilledRect(backgroundRect);
+
+			//g_painter->setColor(fillColor);
+			//g_painter->drawFilledRect(healthRect);
 		}
-		if(m_shieldPercent > 0) {
-			g_painter->setColor(Color::white);
-			g_painter->drawTexturedRect(shieldBackgroundRect, m_shieldBackgroundTexture);
-			g_painter->setColor(Color::white);
-			g_painter->drawTexturedRect(shieldRect, m_shieldTexture);
+
+
+		if(drawFlags & Otc::DrawNames) {
+			if(g_painter->getColor() != fillColor)
+				g_painter->setColor(fillColor);
+			m_nameCache.draw(textRect);
 		}
-	// old bars
-		//g_painter->setColor(Color::black);
-        //g_painter->drawFilledRect(backgroundRect);
 
-        //g_painter->setColor(fillColor);
-        //g_painter->drawFilledRect(healthRect);
-    }
-
-    if(drawFlags & Otc::DrawNames) {
-        if(g_painter->getColor() != fillColor)
-            g_painter->setColor(fillColor);
-        m_nameCache.draw(textRect);
-    }
-
-    if(m_skull != Otc::SkullNone && m_skullTexture) {
-        g_painter->setColor(Color::white);
-        Rect skullRect = Rect(backgroundRect.x() + 20.5 + 24, backgroundRect.y() + 8, m_skullTexture->getSize());
-        g_painter->drawTexturedRect(skullRect, m_skullTexture);
-    }
-    if(m_Pshield != Otc::PshieldNone && m_PshieldTexture && m_showPshieldTexture) {
-        g_painter->setColor(Color::white);
-        Rect PshieldRect = Rect(backgroundRect.x() + 20.5 + 13 , backgroundRect.y() + 8, m_PshieldTexture->getSize());
-        g_painter->drawTexturedRect(PshieldRect, m_PshieldTexture);
-    }
-    if(m_emblem != Otc::EmblemNone && m_emblemTexture) {
-        g_painter->setColor(Color::white);
-        Rect emblemRect = Rect(backgroundRect.x() + 20.5 + 24, backgroundRect.y() + 16, m_emblemTexture->getSize());
-        g_painter->drawTexturedRect(emblemRect, m_emblemTexture);
-    }
-    if(m_icon != Otc::NpcIconNone && m_iconTexture) {
-        g_painter->setColor(Color::white);
-        Rect iconRect = Rect(backgroundRect.x() + 13.5 + 4, backgroundRect.y() + 35, m_iconTexture->getSize());
-        g_painter->drawTexturedRect(iconRect, m_iconTexture);
-    }
+		if(m_skull != Otc::SkullNone && m_skullTexture) {
+			g_painter->setColor(Color::white);
+			Rect skullRect = Rect(backgroundRect.x() + 20.5 + 24, backgroundRect.y() + 8, m_skullTexture->getSize());
+			g_painter->drawTexturedRect(skullRect, m_skullTexture);
+		}
+		if(m_Pshield != Otc::PshieldNone && m_PshieldTexture && m_showPshieldTexture) {
+			g_painter->setColor(Color::white);
+			Rect PshieldRect = Rect(backgroundRect.x() + 20.5 + 13 , backgroundRect.y() + 8, m_PshieldTexture->getSize());
+			g_painter->drawTexturedRect(PshieldRect, m_PshieldTexture);
+		}
+		if(m_emblem != Otc::EmblemNone && m_emblemTexture) {
+			g_painter->setColor(Color::white);
+			Rect emblemRect = Rect(backgroundRect.x() + 20.5 + 24, backgroundRect.y() + 16, m_emblemTexture->getSize());
+			g_painter->drawTexturedRect(emblemRect, m_emblemTexture);
+		}
+		if(m_icon != Otc::NpcIconNone && m_iconTexture) {
+			g_painter->setColor(Color::white);
+			Rect iconRect = Rect(backgroundRect.x() + 13.5 + 4, backgroundRect.y() + 35, m_iconTexture->getSize());
+			g_painter->drawTexturedRect(iconRect, m_iconTexture);
+		}
+	}
 }
 
 void Creature::turn(Otc::Direction direction)

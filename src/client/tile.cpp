@@ -141,28 +141,33 @@ void Tile::draw(const Point& dest, float scaleFactor, int drawFlags, LightView *
         if(animate) {
             for(const CreaturePtr& creature : m_walkingCreatures) {
 				stackcount = stackcount + 1;
-				if(stackcount == 1) {
-					displacey = -12;
-					displacex = -10; }
-				if(stackcount == 2) {
-					displacey = -10;
-					displacex = -2; }
-				if(stackcount == 3) {
-					displacey = -1;
-					displacex = -12; }
-				if(stackcount == 4) {
-					displacex = -5;
-					displacey = -7;
-					stackcount = 0; }
-				if(firstcount < 1) {
-					stackcount = 0;
-					firstcount = 1;
+				if(!creature->isPassable())
 					creature->draw(Point(dest.x + ((creature->getPosition().x - m_position.x)*Otc::TILE_PIXELS - m_drawElevation)*scaleFactor,
 										 dest.y + ((creature->getPosition().y - m_position.y)*Otc::TILE_PIXELS - m_drawElevation)*scaleFactor), scaleFactor, animate, lightView);
-					}
-                else 
-					creature->draw(Point(dest.x + ((creature->getPosition().x - m_position.x)*Otc::TILE_PIXELS - (m_drawElevation - displacex))*scaleFactor,
-										 dest.y + ((creature->getPosition().y - m_position.y)*Otc::TILE_PIXELS - (m_drawElevation - displacey))*scaleFactor), scaleFactor, animate, lightView);
+				else {
+					if(stackcount == 1) {
+						displacey = -12;
+						displacex = -10; }
+					if(stackcount == 2) {
+						displacey = -10;
+						displacex = -2; }
+					if(stackcount == 3) {
+						displacey = -1;
+						displacex = -12; }
+					if(stackcount == 4) {
+						displacex = -5;
+						displacey = -7;
+						stackcount = 0; }
+					if(firstcount < 1) {
+						stackcount = 0;
+						firstcount = 1;
+						creature->draw(Point(dest.x + ((creature->getPosition().x - m_position.x)*Otc::TILE_PIXELS - m_drawElevation)*scaleFactor,
+											 dest.y + ((creature->getPosition().y - m_position.y)*Otc::TILE_PIXELS - m_drawElevation)*scaleFactor), scaleFactor, animate, lightView);
+						}
+					else 
+						creature->draw(Point(dest.x + ((creature->getPosition().x - m_position.x)*Otc::TILE_PIXELS - (m_drawElevation - displacex))*scaleFactor,
+											 dest.y + ((creature->getPosition().y - m_position.y)*Otc::TILE_PIXELS - (m_drawElevation - displacey))*scaleFactor), scaleFactor, animate, lightView);
+				}
             }
         }
 		
@@ -176,27 +181,31 @@ void Tile::draw(const Point& dest, float scaleFactor, int drawFlags, LightView *
                 continue;
             CreaturePtr creature = thing->static_self_cast<Creature>();
             if(creature && (!creature->isWalking() || !animate)) {
-				stackcount = stackcount + 1;
-				if(stackcount == 1) {
-					displacey = -12;
-					displacex = -10; }
-				if(stackcount == 2) {
-					displacey = -10;
-					displacex = -2; }
-				if(stackcount == 3) {
-					displacey = -1;
-					displacex = -12; }
-				if(stackcount == 4) {
-					displacex = -5;
-					displacey = -7;
-					stackcount = 0; }
-				if(firstcount < 1) {
-					stackcount = 0;
-					firstcount = 1;
+				if(!creature->isPassable())
 					creature->draw(Point(dest.x - (m_drawElevation)*scaleFactor,dest.y - (m_drawElevation)*scaleFactor), scaleFactor, animate, lightView); 
+				else {
+					stackcount = stackcount + 1;
+					if(stackcount == 1) {
+						displacey = -12;
+						displacex = -10; }
+					if(stackcount == 2) {
+						displacey = -10;
+						displacex = -2; }
+					if(stackcount == 3) {
+						displacey = -1;
+						displacex = -12; }
+					if(stackcount == 4) {
+						displacex = -5;
+						displacey = -7;
+						stackcount = 0; }
+					if(firstcount < 1) {
+						stackcount = 0;
+						firstcount = 1;
+						creature->draw(Point(dest.x - (m_drawElevation)*scaleFactor,dest.y - (m_drawElevation)*scaleFactor), scaleFactor, animate, lightView); 
+					}
+					else
+						creature->draw(Point(dest.x - (m_drawElevation -displacex)*scaleFactor,dest.y - (m_drawElevation - displacey)*scaleFactor), scaleFactor, animate, lightView);
 				}
-				else
-					creature->draw(Point(dest.x - (m_drawElevation -displacex)*scaleFactor,dest.y - (m_drawElevation - displacey)*scaleFactor), scaleFactor, animate, lightView);
 			}
         }
     }
